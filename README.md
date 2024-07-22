@@ -189,3 +189,76 @@
 - **EndPoint**:`/delete/:id`
 - **Method** : `DELETE`
 - **Desc** :DELETE  experience by user id
+
+
+
+### 5. Base URL: `/projects`
+
+#### 5.1 add experience
+
+- **EndPoint**:`/create`
+- **Method** : `POST`
+- **Desc** :add project
+
+- **Request Headers**:
+  - `Content-Type: multipart/formdata`
+  - **request file**
+    -- an image with file named "image" ,5 requirements
+- **Request Body**:
+  ```json
+  form data with fields
+  **img url**,
+  **projectId**,
+  **userId**
+  **name**
+  **noVotes**
+  **skills** ->array
+  **job type**
+  **note**
+  ```
+  or as of requirements as body for upload
+#### 5.2 GET ALL experience
+
+- **EndPoint**:`getall`
+- **Method** : `get`
+- **Desc** :get all  the experiences
+
+#### 5.3 get experience by experience id
+- **EndPoint**:`/get/project/:id`
+- **Method** : `get`
+- **Desc** :get  experience by experience id
+
+
+#### 5.4 get experience by user id
+- **EndPoint**:`/get/user/:id`
+- **Method** : `get`
+- **Desc** :get  experience by user id
+
+#### 5.5 update experience by experience id
+- **EndPoint**:`/update/:id`
+- **Method** : `PUT`
+- **Desc** :UPDATE experience
+
+- **Request Headers**:
+  - `Content-Type: multipart/formdata`
+  - **request file**
+    -- an image with file named "image"
+- **Request Body**:
+  ```json
+  form data with fields
+  **userId**
+  **name**
+  **bio**
+  **link**
+  **skills** ->array
+  **job type**
+  **fromDate**
+  **toDate**
+  **note**
+  ```
+  ##as required##
+
+#### 5.6 delete project by experience id
+- **EndPoint**:`/delete/:id`
+- **Method** : `DELETE`
+- **Desc** :DELETE  project by user id

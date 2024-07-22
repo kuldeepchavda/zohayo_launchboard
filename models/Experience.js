@@ -44,4 +44,4 @@ const userExperienceSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model("UserProfile", userExperienceSchema);
+module.exports = mongoose.model("experience-launchboard", userExperienceSchema);
