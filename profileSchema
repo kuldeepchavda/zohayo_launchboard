@@ -1,0 +1,62 @@
+{
+    "profile": {
+        "image": "string (URL)",
+        "name": "string",
+        "bio": "string",
+        "socials": [
+            {
+                "platformName": "string",
+                "link": "string (URL)"
+            }
+        ]
+    },
+    "experience": {
+        "bio": "string",
+        "skills": [
+            "string"
+        ],
+        "comenent": "// ExperienceList will be the list of the experiences",
+        "ExperienceList": [
+            {
+                "ExperienceId": "String",
+                "image": "string (URL)",
+                "name": "string",
+                "bio": "string",
+                "link": "string (URL)",
+                "skills": [
+                    "string"
+                ],
+                "jobType": "string",
+                "fromDate": "date",
+                "toDate": "date",
+                "notes": "string"
+            }
+        ]
+    },
+    "comenent": "// projects will be the list of the experiences",
+    "projects": [
+        {
+            "projectId": "String",
+            "name": "string",
+            "image": "string (URL)",
+            "stageOfProject": "string",
+            "likes": "integer",
+            "notes": "string",
+            "skills": [
+                "string"
+            ]
+        }
+    ],
+    "jobs": [{
+        "jobId":"String",
+        "image": "string (URL)",
+        "post": "String",
+        "CompanyName": "String",
+        "jobTime": "String",
+        "SalaryFrom": "string",
+        "Skills": [
+            "String"
+        ],
+        "NumberOfJobApplications": "String"
+    }]
+}

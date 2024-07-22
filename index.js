@@ -5,7 +5,9 @@ const app = express();
 app.use(express.json())
 dotenv.config();
  const contactRoute= require("./routes/contactUs.routes")
+ const newsletterRoutes= require("./routes/newsletteremail.routes")
 app.use("/contact",contactRoute)
+app.use("/newsletter",newsletterRoutes)
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
