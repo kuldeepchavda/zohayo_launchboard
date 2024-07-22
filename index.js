@@ -3,11 +3,13 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 app.use(express.json())
+const contactRoute= require("./routes/contactUs.routes")
+const newsletterRoutes = require("./routes/newsletteremail.routes");
+const profileRoutes = require("./routes/profile.routes");
 dotenv.config();
- const contactRoute= require("./routes/contactUs.routes")
- const newsletterRoutes= require("./routes/newsletteremail.routes")
 app.use("/contact",contactRoute)
 app.use("/newsletter",newsletterRoutes)
+app.use("/profile",profileRoutes)
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
