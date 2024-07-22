@@ -6,7 +6,6 @@ const multer = require("multer");
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-
 // Create a new profile
 router
   .route("/upload")

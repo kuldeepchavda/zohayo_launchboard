@@ -23,14 +23,16 @@ const upload = multer({ storage });
 const getImageDownloadURL = async (dir, file) => {     // "dir" defins the path at your bucket where you would like to put your data 
   try {
     // const { default: slugify } = await import("@sindresorhus/slugify");
-    const extension = path.extname(file.originalname);
-    const filename = uuidv4()+ extension;
-    // console.log(filename);  
-    const imageRef = ref(firebaseStorage, `${dir}/${filename}`);
-    const snapshot = await uploadBytes(imageRef, file.buffer);
-    const imageURL = await getDownloadURL(snapshot.ref);
-    // console.log(imageURL);
-    return imageURL;
+   if(file){
+     const extension = path.extname(file.originalname);
+     const filename = uuidv4() + extension;
+     // console.log(filename);
+     const imageRef = ref(firebaseStorage, `${dir}/${filename}`);
+     const snapshot = await uploadBytes(imageRef, file.buffer);
+     const imageURL = await getDownloadURL(snapshot.ref);
+     // console.log(imageURL);
+     return imageURL; 
+   }
   } catch (error) {
     return console.log(error);
   }
@@ -50,5 +52,5 @@ app.post("/products", upload.array("image", 10), async (req, res, next) => {
   }
 });
 
-module.exports = {getImageDownloadURL}
+module.exports =getImageDownloadURL
 // app.listen(port,()=>{console.log(`app listening on port ${port}`)})

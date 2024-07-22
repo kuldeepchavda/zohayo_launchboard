@@ -3,7 +3,7 @@ const getImageDownloadURL = require("../utils/uploadImage");
 // Create a new profile
 exports.createProfile = async (req, res) => {
   try {
-    const imageUrl = await getImageDownloadURL.getImageDownloadURL(
+    const imageUrl = await getImageDownloadURL(
       "/launchBoard",
       req.file
     );
@@ -48,7 +48,7 @@ exports.getProfileById = async (req, res) => {
 // Update a profile by ID
 exports.updateProfile = async (req, res) => {
   try {
-    const imageUrl = await getImageDownloadURL.getImageDownloadURL("launchpad", req.file);
+    const imageUrl = await getImageDownloadURL("launchpad", req.file);
     const profile = await Profile.findOneAndUpdate(
       { userId: req.params.id },
       { imageUrl, ...req.body },
