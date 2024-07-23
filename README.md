@@ -35,11 +35,11 @@
 
 ### 2. Base URL: `/newsletter`
 
-#### 2.1 Create a Contact
+#### 2.1 Add an email
 
 - **Endpoint**: `/add`
 - **Method**: `POST`
-- **Description**: add a new email add.
+- **Description**: add a new email address.
 - **Request Headers**:
   - `Content-Type: application/json`
 - **Request Body**:
@@ -53,9 +53,9 @@
 
 - **Endpoint**: `/getall`
 - **Method**: `get`
-- **Description**: get all contacts.
+- **Description**: get all emails.
 
-#### 2.3 get single Contacts
+#### 2.3 delete single email
 
 - **Endpoint**: `/delete/:email`
 - **Method**: `delete`
@@ -146,7 +146,7 @@
   ```
 #### 4.2 GET ALL experience
 
-- **EndPoint**:`getall`
+- **EndPoint**:`/getall`
 - **Method** : `get`
 - **Desc** :get all  the experiences
 
@@ -194,7 +194,7 @@
 
 ### 5. Base URL: `/projects`
 
-#### 5.1 add experience
+#### 5.1 add projects
 
 - **EndPoint**:`/create`
 - **Method** : `POST`
@@ -217,27 +217,27 @@
   **note**
   ```
   or as of requirements as body for upload
-#### 5.2 GET ALL experience
+#### 5.2 GET ALL projects
 
-- **EndPoint**:`getall`
+- **EndPoint**:`/getall`
 - **Method** : `get`
-- **Desc** :get all  the experiences
+- **Desc** :get all  the projects
 
-#### 5.3 get experience by experience id
+#### 5.3 get project by project id
 - **EndPoint**:`/get/project/:id`
 - **Method** : `get`
-- **Desc** :get  experience by experience id
+- **Desc** :get  project by project id
 
 
-#### 5.4 get experience by user id
+#### 5.4 get projects by user id
 - **EndPoint**:`/get/user/:id`
 - **Method** : `get`
-- **Desc** :get  experience by user id
+- **Desc** :get  project by user id
 
-#### 5.5 update experience by experience id
+#### 5.5 update project by project id
 - **EndPoint**:`/update/:id`
 - **Method** : `PUT`
-- **Desc** :UPDATE experience
+- **Desc** :UPDATE project
 
 - **Request Headers**:
   - `Content-Type: multipart/formdata`
@@ -258,7 +258,86 @@
   ```
   ##as required##
 
-#### 5.6 delete project by experience id
+#### 5.6 delete project by project id
 - **EndPoint**:`/delete/:id`
 - **Method** : `DELETE`
 - **Desc** :DELETE  project by user id
+
+
+
+### 6. Base URL: `/job`
+
+#### 6.1 add job
+
+- **EndPoint**:`/create`
+- **Method** : `POST`
+- **Desc** :add project
+
+- **Request Headers**:
+  - `Content-Type: multipart/formdata`
+  - **request file**
+    -- an image with file named "image" 
+- **Request Body**:
+  ```json
+  form data with fields
+  -jobId,
+  -userId
+   -title,
+  -subheading,
+  -projectLink,
+  -jobType,
+  -submissionDate,
+  -compensationType,
+  -compensationDetails,
+  -socials,
+  -description,
+  -descriptionHeading,
+  ```
+  or as of requirements as body for upload
+#### 6.2 GET ALL job
+
+- **EndPoint**:`getall`
+- **Method** : `get`
+- **Desc** :get all  the job
+
+#### 6.3 get job by job id
+- **EndPoint**:`/get/jobid/:id`
+- **Method** : `get`
+- **Desc** :get  job by job id
+
+
+#### 6.4 get job by user id
+- **EndPoint**:`/get/userid/:id`
+- **Method** : `get`
+- **Desc** :get  job by user id
+
+#### 6.5 update job by job id
+- **EndPoint**:`/update/:id`
+- **Method** : `PUT`
+- **Desc** :UPDATE job
+
+- **Request Headers**:
+  - `Content-Type: multipart/formdata`
+  - **request file**
+    -- an image with file named "image"
+- **Request Body**:
+ ```json
+  form data with fields
+   -title,
+  -subheading,
+  -projectLink,
+  -jobType,
+  -submissionDate,
+  -compensationType,
+  -compensationDetails,
+  -socials,
+  -description,
+  -descriptionHeading,
+  -jobId,
+  -userId
+  ## as required ##
+```
+#### 6.6 delete job by job id
+- **EndPoint**:`/delete/:id`
+- **Method** : `DELETE`
+- **Desc** :DELETE  job by user id
