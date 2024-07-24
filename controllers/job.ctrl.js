@@ -8,9 +8,27 @@ exports.createJob = async (req, res) => {
       imageUrl = await getImageDownloadURL("jobs", req.file);
     }
 
+    // category;
+    const finalCategory = [];
+    const categoryComponents = req.body.category.split(" ");
+    categoryComponents.map((cat) => {
+      if (finalCategory.indexOf(cat) == -1) {
+        finalCategory.push(cat);
+      }
+    });
+
+       const socials = {
+         twitter: req.body.twtlink,
+         instagram: req.body.instalink,
+         facebook: req.body.fblink,
+         discord: "www.dclink.com",
+       };
+    console.log(finalCategory)
     const job = new Job({
       ...req.body,
       imageUrl,
+      category:finalCategory,
+      socials:socials
     });
     await job.save();
     res.status(201).send(job);

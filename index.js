@@ -11,7 +11,7 @@ const profileRoutes = require("./routes/profile.routes");
 const experienceRoutes = require("./routes/experience.routes")
 const projectsRoutes = require("./routes/projects.routes")
 const jobRoutes = require("./routes/job.routes")
-
+const feedRoutes = require("./routes/feeds.routes")
 app.use(express.json())
 app.use("/contact",contactRoute);
 app.use("/newsletter",newsletterRoutes);
@@ -19,6 +19,7 @@ app.use("/profile",profileRoutes);
 app.use("/experience",experienceRoutes)
 app.use("/projects",projectsRoutes)
 app.use("/job",jobRoutes)
+app.use("/feeds",feedRoutes)
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {

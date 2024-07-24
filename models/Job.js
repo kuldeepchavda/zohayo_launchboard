@@ -29,7 +29,10 @@ const jobSchema = new Schema({
     type: String,
   },
   socials: {
-    type: [String],
+    twitter: { type: String },
+    instagram: { type: String },
+    facebook: { type: String },
+    discord: { type: String },
   },
   description: {
     type: String,
@@ -44,6 +47,7 @@ const jobSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  category: { type: [String] },
 });
 
 module.exports = mongoose.model("Job-lauchpad", jobSchema);

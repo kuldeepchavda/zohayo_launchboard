@@ -410,3 +410,16 @@ as of in create , but only the fields which are need to be changed
 - **EndPoint**:`/delete/:id`
 - **Method** : `DELETE`
 - **Desc** :DELETE job by user id
+
+
+### 7. Base URL: `/feeds`
+
+
+#### 7.1 to get all or filter out the jobs
+## description:-TO filter out the projects accordingly
+### Reast url `localhost:8080/feeds/project?category=Infrastructure,AI`
+
+
+#### 7.1 to get all or filter out the jobs
+## description:-TO filter out the jobs accordingly
+### Reast url `localhost:8080/feeds/job?jobType=half&compensation=`
