@@ -12,4 +12,5 @@ router.get("/get/experience/:id", experienceController.getExperienceById);
 router.get("/get/user/:id", experienceController.getExperienceByUserId);
 router.put("/update/:id",upload.single("image"),experienceController.updateExperienceById);
 router.delete("/delete/:id", experienceController.deleteExperience);
+
 module.exports = router;

@@ -144,24 +144,27 @@
   **toDate**
   **note**
   ```
+
 #### 4.2 GET ALL experience
 
 - **EndPoint**:`/getall`
 - **Method** : `get`
-- **Desc** :get all  the experiences
+- **Desc** :get all the experiences
 
 #### 4.3 get experience by experience id
+
 - **EndPoint**:`/get/experience/:id`
 - **Method** : `get`
-- **Desc** :get  experience by experience id
-
+- **Desc** :get experience by experience id
 
 #### 4.4 get experience by user id
+
 - **EndPoint**:`/get/user/:id`
 - **Method** : `get`
-- **Desc** :get  experience by user id
+- **Desc** :get experience by user id
 
 #### 4.5 update experience by experience id
+
 - **EndPoint**:`/update/:id`
 - **Method** : `PUT`
 - **Desc** :UPDATE experience
@@ -186,15 +189,20 @@
   ##as required##
 
 #### 4.6 delete experience by experience id
+
 - **EndPoint**:`/delete/:id`
 - **Method** : `DELETE`
-- **Desc** :DELETE  experience by user id
-
-
+- **Desc** :DELETE experience by user id
 
 ### 5. Base URL: `/projects`
 
-#### 5.1 add projects
+## here 5.1 refers to projects data
+
+## AND 5.2 refers to projects collaborators.
+
+## 5.1 projects details
+
+#### 5.1.1 add projects
 
 - **EndPoint**:`/create`
 - **Method** : `POST`
@@ -217,24 +225,27 @@
   **note**
   ```
   or as of requirements as body for upload
-#### 5.2 GET ALL projects
+
+#### 5.1.2 GET ALL projects
 
 - **EndPoint**:`/getall`
 - **Method** : `get`
-- **Desc** :get all  the projects
+- **Desc** :get all the projects
 
-#### 5.3 get project by project id
+#### 5.1.3 get project by project id
+
 - **EndPoint**:`/get/project/:id`
 - **Method** : `get`
-- **Desc** :get  project by project id
+- **Desc** :get project by project id
 
+#### 5.1.4 get projects by user id
 
-#### 5.4 get projects by user id
 - **EndPoint**:`/get/user/:id`
 - **Method** : `get`
-- **Desc** :get  project by user id
+- **Desc** :get project by user id
 
-#### 5.5 update project by project id
+#### 5.1.5 update project by project id
+
 - **EndPoint**:`/update/:id`
 - **Method** : `PUT`
 - **Desc** :UPDATE project
@@ -258,12 +269,64 @@
   ```
   ##as required##
 
-#### 5.6 delete project by project id
+#### 5.1.6 delete project by project id
+
 - **EndPoint**:`/delete/:id`
 - **Method** : `DELETE`
-- **Desc** :DELETE  project by user id
+- **Desc** :DELETE project by user id
+
+#### 5.2 COLLABORATORS
+
+#### 5.2.1 add collaborator
+
+- **EndPoint**:`/collaborator/create/:projectId`
+- **Method** : `POST`
+- **Desc** :to add user with userId in `projectId` (provide userId in req.body)
+
+- **Request Headers**:
+  - `Content-Type: multipart/formdata`
+  - **request file**
+    -- an image with file named "image" ,5 requirements
+- **Request Body**:
+  ```json
+  -userId
+  -name
+  -role
+  -tenure
+  -joiningDate
+  -leavingDate
+  -workingCurrently
+  -taskAssigned
+  ```
+  or as of requirements as body for upload
+
+#### 5.2.2 GET ALL projects particular user with userId `userId` is part of
+
+- **EndPoint**:`/collaborator/get/:userId`
+- **Method** : `get`
+- **Desc** :get all the projects with particular userId in collaborators
 
 
+#### 5.2.3 update informations of particular collaborator in particular `projectId` 
+
+- **EndPoint**:`/collaborator/update/:projectId/:userId`
+- **Method** : `PUT`
+- **Desc** :UPDATE information of particular collaborator in particular project
+
+- **Request Headers**:
+  - `Content-Type: multipart/formdata`
+  - **request file**
+    -- an image with file named "image"
+- **Request Body**:
+as of in create , but only the fields which are need to be changed
+  ##as required##
+
+
+#### 5.2.4 delete collaborator from particular project
+
+- **EndPoint**:`/collabprator/delete/:projectId/:userId`
+- **Method** : `DELETE`
+- **Desc** :DELETE collaboratoe in projec id
 
 ### 6. Base URL: `/job`
 
@@ -276,7 +339,7 @@
 - **Request Headers**:
   - `Content-Type: multipart/formdata`
   - **request file**
-    -- an image with file named "image" 
+    -- an image with file named "image"
 - **Request Body**:
   ```json
   form data with fields
@@ -294,24 +357,27 @@
   -descriptionHeading,
   ```
   or as of requirements as body for upload
+
 #### 6.2 GET ALL job
 
 - **EndPoint**:`getall`
 - **Method** : `get`
-- **Desc** :get all  the job
+- **Desc** :get all the job
 
 #### 6.3 get job by job id
+
 - **EndPoint**:`/get/jobid/:id`
 - **Method** : `get`
-- **Desc** :get  job by job id
-
+- **Desc** :get job by job id
 
 #### 6.4 get job by user id
+
 - **EndPoint**:`/get/userid/:id`
 - **Method** : `get`
-- **Desc** :get  job by user id
+- **Desc** :get job by user id
 
 #### 6.5 update job by job id
+
 - **EndPoint**:`/update/:id`
 - **Method** : `PUT`
 - **Desc** :UPDATE job
@@ -321,23 +387,26 @@
   - **request file**
     -- an image with file named "image"
 - **Request Body**:
- ```json
-  form data with fields
-   -title,
-  -subheading,
-  -projectLink,
-  -jobType,
-  -submissionDate,
-  -compensationType,
-  -compensationDetails,
-  -socials,
-  -description,
-  -descriptionHeading,
-  -jobId,
-  -userId
-  ## as required ##
+
+```json
+ form data with fields
+  -title,
+ -subheading,
+ -projectLink,
+ -jobType,
+ -submissionDate,
+ -compensationType,
+ -compensationDetails,
+ -socials,
+ -description,
+ -descriptionHeading,
+ -jobId,
+ -userId
+ ## as required ##
 ```
+
 #### 6.6 delete job by job id
+
 - **EndPoint**:`/delete/:id`
 - **Method** : `DELETE`
-- **Desc** :DELETE  job by user id
+- **Desc** :DELETE job by user id
