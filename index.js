@@ -1,34 +1,50 @@
-
 const dotenv = require("dotenv");
 dotenv.config();
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 5000; // Default to port 5000 if PORT is not defined
 const express = require("express");
 const mongoose = require("mongoose");
+const http = require("http"); // Import the http module
+const { join } = require("node:path");
 const app = express();
-const contactRoute= require("./routes/contactUs.routes")
+const server = http.createServer(app); // Create an HTTP server
+const socketServices = require("./services/socketServices")
+// Import your routes
+const contactRoute= require("./routes/contactUs.routes");
 const newsletterRoutes = require("./routes/newsletteremail.routes");
 const profileRoutes = require("./routes/profile.routes");
-const experienceRoutes = require("./routes/experience.routes")
-const projectsRoutes = require("./routes/projects.routes")
-const jobRoutes = require("./routes/job.routes")
-const feedRoutes = require("./routes/feeds.routes")
-app.use(express.json())
-app.use("/contact",contactRoute);
-app.use("/newsletter",newsletterRoutes);
-app.use("/profile",profileRoutes);
-app.use("/experience",experienceRoutes)
-app.use("/projects",projectsRoutes)
-app.use("/job",jobRoutes)
-app.use("/feeds",feedRoutes)
+const experienceRoutes = require("./routes/experience.routes");
+const projectsRoutes = require("./routes/projects.routes");
+const jobRoutes = require("./routes/job.routes");
+const feedRoutes = require("./routes/feeds.routes");
+
+// Use middleware
+app.use(express.json());
+
+// Use routes
+app.get("/chat_app", (req, res) => {
+  res.sendFile(join(__dirname, "index.html"));
+});
+app.use("/contact", contactRoute);
+app.use("/newsletter", newsletterRoutes);
+app.use("/profile", profileRoutes);
+app.use("/experience", experienceRoutes);
+app.use("/projects", projectsRoutes);
+app.use("/job", jobRoutes);
+app.use("/feeds", feedRoutes);
+
+// Database connection
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
-    console.log("Database conneted");
+    console.log("Database connected");
   })
-  .catch((err) => {
-    console.log("Error occured", err.message);
+  .catch((err) => { 
+    console.log("Error occurred", err.message);
   });
-  
-app.listen(PORT, () => {
-  console.log(`running on port ${PORT}.`);
+ 
+
+socketServices(server)
+// Start the server
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}.`);
 });
