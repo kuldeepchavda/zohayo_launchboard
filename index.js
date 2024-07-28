@@ -1,5 +1,6 @@
 const dotenv = require("dotenv");
 dotenv.config();
+const Users  = require("./models/Users")
 const PORT = process.env.PORT || 5000; // Default to port 5000 if PORT is not defined
 const express = require("express");
 const mongoose = require("mongoose");
@@ -9,6 +10,7 @@ const app = express();
 const server = http.createServer(app); // Create an HTTP server
 const socketServices = require("./services/socketServices")
 // Import your routes
+const usersRoutes = require("./routes/users.routes")
 const contactRoute= require("./routes/contactUs.routes");
 const newsletterRoutes = require("./routes/newsletteremail.routes");
 const profileRoutes = require("./routes/profile.routes");
@@ -16,12 +18,13 @@ const experienceRoutes = require("./routes/experience.routes");
 const projectsRoutes = require("./routes/projects.routes");
 const jobRoutes = require("./routes/job.routes");
 const feedRoutes = require("./routes/feeds.routes");
-
+const cors = require("cors")
+app.use(cors())
 // Use middleware
 app.use(express.json());
 
 // Use routes
-app.get("/chat_app", (req, res) => {
+app.get("/", (req, res) => {
   res.sendFile(join(__dirname, "index.html"));
 });
 app.use("/contact", contactRoute);
@@ -31,6 +34,7 @@ app.use("/experience", experienceRoutes);
 app.use("/projects", projectsRoutes);
 app.use("/job", jobRoutes);
 app.use("/feeds", feedRoutes);
+app.use("/people",usersRoutes)
 
 // Database connection
 mongoose
