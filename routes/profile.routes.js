@@ -17,7 +17,7 @@ router.get("/getall", profileCTRLs.getProfiles);
 router.get("/get/:id", profileCTRLs.getProfileById);
 
 // Update a profile by ID
-router.put("/update/:id", profileCTRLs.updateProfile);
+router.route("/update/:id").put(upload.single("image"), profileCTRLs.updateProfile);
 
 // Delete a profile by ID
 router.delete("/delete/:id", profileCTRLs.deleteProfile);

@@ -1,5 +1,5 @@
 // const admin = require("firebase-admin");
-const { firebaseConfig } = require("./firebaseConfig");
+const { firebaseConfig } = require("./config/firebaseConfig");
 const { initializeApp } = require("firebase/app");
 const { getStorage } = require("firebase/storage");
 // const { getAuth, createUserWithEmailAndPassword } = require("firebase/auth");

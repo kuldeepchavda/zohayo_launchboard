@@ -7,7 +7,8 @@ exports.createProfile = async (req, res) => {
       "/launchBoard",
       req.file
     );
-
+     console.log(imageUrl);
+     console.log("body", req.body);
     const profile = new Profile({
       imageUrl: imageUrl,
       userId: req.body.id,
@@ -16,7 +17,7 @@ exports.createProfile = async (req, res) => {
       socials: req.body.socials,
       projectLink: req.body.projectLink,
     });
-    console.log(`user:-${req.body.id} created`);
+    console.log(`user:-${req.body._id} created`);
     await profile.save();
     res.status(201).json(profile);
   } catch (error) {
@@ -48,12 +49,14 @@ exports.getProfileById = async (req, res) => {
 // Update a profile by ID
 exports.updateProfile = async (req, res) => {
   try {
-    const imageUrl = await getImageDownloadURL("launchpad", req.file);
+    const imageUrl = await getImageDownloadURL("launchBoard", req.file);
+    console.log(imageUrl)
+    // console.log(imageUrl);
+    console.log("body",req.body)
     const profile = await Profile.findOneAndUpdate(
       { userId: req.params.id },
-      { imageUrl, ...req.body },
       {
-        new: true,
+        $set: { imageUrl, ...req.body },
       }
     );
 
@@ -62,6 +65,7 @@ exports.updateProfile = async (req, res) => {
     } else {
       res.status(200).json(profile);
       console.log(`${req.params.id} updated`);
+      console.log(profile)
     }
   } catch (error) {
     console.log(error)

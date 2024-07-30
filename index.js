@@ -1,12 +1,12 @@
 const dotenv = require("dotenv");
 dotenv.config();
-const Users  = require("./models/Users")
 const PORT = process.env.PORT || 5000; // Default to port 5000 if PORT is not defined
 const express = require("express");
 const mongoose = require("mongoose");
 const http = require("http"); // Import the http module
 const { join } = require("node:path");
 const app = express();
+const authRouter = require("./routes/authentication.routes")
 const server = http.createServer(app); // Create an HTTP server
 const socketServices = require("./services/socketServices")
 // Import your routes
@@ -18,15 +18,33 @@ const experienceRoutes = require("./routes/experience.routes");
 const projectsRoutes = require("./routes/projects.routes");
 const jobRoutes = require("./routes/job.routes");
 const feedRoutes = require("./routes/feeds.routes");
-const cors = require("cors")
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const session = require("express-session")
 app.use(cors())
+const passport = require("passport")
 // Use middleware
+app.use(bodyParser.urlencoded({extended:false}))
+app.use(bodyParser.json());
 app.use(express.json());
 
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+require("./config/passportConfig")(passport);
 // Use routes
 app.get("/", (req, res) => {
   res.sendFile(join(__dirname, "index.html"));
 });
+app.use("/auth",authRouter)
 app.use("/contact", contactRoute);
 app.use("/newsletter", newsletterRoutes);
 app.use("/profile", profileRoutes);
@@ -44,9 +62,7 @@ mongoose
   })
   .catch((err) => { 
     console.log("Error occurred", err.message);
-  });
- 
-
+  }); 
 socketServices(server)
 // Start the server
 server.listen(PORT, () => {
