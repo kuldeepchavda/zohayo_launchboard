@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 const CollaboratorSchema = new Schema({
   imageUrl:{type:String},
+  email:{type:String},
   userId: { type: String, },
   name: { type: String, },
   role: { type: String, },
@@ -39,9 +40,9 @@ const userProjectSchema = new Schema({
   },
   socials: {
     twitter: { type: String },
-    instagram: { type: String },
+    github: { type: String },
     facebook: { type: String },
-    discord: { type: String },
+    linkedin: { type: String },
   },
   description: {
     type: String,
@@ -51,6 +52,7 @@ const userProjectSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  filesUrl:{type:String}
 });
 
 module.exports = mongoose.model("project-launcboard", userProjectSchema);

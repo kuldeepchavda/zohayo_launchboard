@@ -10,29 +10,26 @@ const jobSchema = new Schema({
   title: {
     type: String,
   },
-  subheading: {
+  company: {
     type: String,
   },
-  projectLink: {
-    type: String,
-  },
+  // subheading: {
+  //   type: String,
+  // },
   jobType: {
     type: String,
   },
-  submissionDate: {
-    type: String,
-  },
   compensationType: {
-    type: [String],
+    type: String,
   },
   compensationDetails: {
     type: String,
   },
-  socials: {
+  socialLinks: {
     twitter: { type: String },
-    instagram: { type: String },
+    github: { type: String },
     facebook: { type: String },
-    discord: { type: String },
+    linkedin: { type: String },
   },
   description: {
     type: String,
@@ -40,14 +37,11 @@ const jobSchema = new Schema({
   imageUrl: {
     type: String,
   },
-  descriptionHeading: {
-    type: String,
-  },
   createdOn: {
     type: Date,
     default: Date.now,
   },
-  category: { type: [String] },
+  requirements: { type: [String] },
 });
 
 module.exports = mongoose.model("Job-lauchpad", jobSchema);

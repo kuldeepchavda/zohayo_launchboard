@@ -7,30 +7,28 @@ exports.createJob = async (req, res) => {
     if (req.file) {
       imageUrl = await getImageDownloadURL("jobs", req.file);
     }
-
+    console.log(req.body)
+console.log(imageUrl)
     // category;
-    const finalCategory = [];
-    const categoryComponents = req.body.category.split(" ");
-    categoryComponents.map((cat) => {
-      if (finalCategory.indexOf(cat) == -1) {
-        finalCategory.push(cat);
-      }
-    });
+    const categoryComponents = req.body.requirements
+console.log(categoryComponents);
+    
+    const socialLinks = JSON.parse(req.body.socialLinks)
+    console.log(socialLinks)
+    
 
-       const socials = {
-         twitter: req.body.twtlink,
-         instagram: req.body.instalink,
-         facebook: req.body.fblink,
-         discord: "www.dclink.com",
-       };
-    console.log(finalCategory)
+    
     const job = new Job({
       ...req.body,
       imageUrl,
-      category:finalCategory,
-      socials:socials
+      socialLinks,
+      requirements: JSON.parse(req.body.requirements),
     });
+
+    console.log(job);
+  console.log("//////")
     await job.save();
+    console.log(job)
     res.status(201).send(job);
   } catch (error) {
     res.status(404).send(error.message);

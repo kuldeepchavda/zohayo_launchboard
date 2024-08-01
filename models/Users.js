@@ -23,11 +23,13 @@ const userSchema = new mongoose.Schema({
 
 // Pre-save hook to hash the password before saving
 userSchema.pre("save", async function (next) {
-  if (this.isModified("password") || this.isNew) {
-    const salt = await bcrypt.genSalt(10); // Generate salt
-    this.password = await bcrypt.hash(this.password, salt); // Hash password using generated salt
-  }
-  next();
+ if (this.password){
+   if (this.isModified("password") || this.isNew) {
+     const salt = await bcrypt.genSalt(10); // Generate salt
+     this.password = await bcrypt.hash(this.password, salt); // Hash password using generated salt
+   }
+   next();
+ }
 });
 
 // Method to compare passwords

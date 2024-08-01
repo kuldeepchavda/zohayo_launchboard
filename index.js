@@ -6,12 +6,12 @@ const mongoose = require("mongoose");
 const http = require("http"); // Import the http module
 const { join } = require("node:path");
 const app = express();
-const authRouter = require("./routes/authentication.routes")
+const authRouter = require("./routes/authentication.routes");
 const server = http.createServer(app); // Create an HTTP server
-const socketServices = require("./services/socketServices")
+const socketServices = require("./services/socketServices");
 // Import your routes
-const usersRoutes = require("./routes/users.routes")
-const contactRoute= require("./routes/contactUs.routes");
+const usersRoutes = require("./routes/users.routes");
+const contactRoute = require("./routes/contactUs.routes");
 const newsletterRoutes = require("./routes/newsletteremail.routes");
 const profileRoutes = require("./routes/profile.routes");
 const experienceRoutes = require("./routes/experience.routes");
@@ -20,14 +20,15 @@ const jobRoutes = require("./routes/job.routes");
 const feedRoutes = require("./routes/feeds.routes");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const session = require("express-session")
-app.use(cors())
-const passport = require("passport")
+const session = require("express-session");
+app.use(cors());
+const passport = require("passport");
 // Use middleware
-app.use(bodyParser.urlencoded({extended:false}))
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.json());
 
+require("./config/passportConfig")(passport);
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -35,16 +36,11 @@ app.use(
     saveUninitialized: true,
   })
 );
-
-
 app.use(passport.initialize());
 app.use(passport.session());
-require("./config/passportConfig")(passport);
 // Use routes
-app.get("/", (req, res) => {
-  res.sendFile(join(__dirname, "index.html"));
-});
-app.use("/auth",authRouter)
+
+app.use("/auth", authRouter);
 app.use("/contact", contactRoute);
 app.use("/newsletter", newsletterRoutes);
 app.use("/profile", profileRoutes);
@@ -52,7 +48,7 @@ app.use("/experience", experienceRoutes);
 app.use("/projects", projectsRoutes);
 app.use("/job", jobRoutes);
 app.use("/feeds", feedRoutes);
-app.use("/people",usersRoutes)
+app.use("/people", usersRoutes);
 
 // Database connection
 mongoose
@@ -60,10 +56,10 @@ mongoose
   .then(() => {
     console.log("Database connected");
   })
-  .catch((err) => { 
+  .catch((err) => {
     console.log("Error occurred", err.message);
-  }); 
-socketServices(server)
+  });
+socketServices(server);
 // Start the server
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}.`);

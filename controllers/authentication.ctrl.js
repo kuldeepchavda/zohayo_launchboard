@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
-
+const getJWT = require("../utils/getJWT")
 exports.signup = (req, res, next) => {
   passport.authenticate("signup", (err, user, info) => {
     if (err) {
@@ -31,7 +31,12 @@ exports.login = (req, res, next) => {
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
         expiresIn: "1h",
       });
+      // const token = getJWT(user._id,user.email)
       return res.status(200).json({ message: "Login successful", token });
     });
   })(req, res, next);
 };
+
+// exports.loginWithGoogle =(req,res)=>{
+//   passport.authenticate('google', { scope: [ 'email', 'profile' ] })
+// }

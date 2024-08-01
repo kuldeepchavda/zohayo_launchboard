@@ -1,9 +1,12 @@
 const getImageDownloadURL = require("../utils/uploadImage");
+const getFileDownloadURL = require("../utils/getFileDownloadUrl")
 const Projects = require("../models/Projects");
+// const { link } = require("../routes/projects.routes");
 exports.createProject = async (req, res) => {
   try {
-    const { category, fblink, twtlink, instalink } = req.body;
+    const { category,linkedin, facebook, twitter, github } = req.body;
     //categories
+    console.log(req.file)
     const finalCategory = [];
     const categoryComponents = category.split(" ");
     categoryComponents.map((cat) => {
@@ -15,16 +18,19 @@ exports.createProject = async (req, res) => {
     // socials
 
     const socials = {
-      twitter: twtlink,
-      instagram: instalink,
-      facebook: fblink,
-      discord: "www.dclink.com",
+      twitter: twitter,
+      github: github,
+      facebook: facebook,
+      linkedin: linkedin,
     };
 
     const imageUrl = await getImageDownloadURL("projects", req.file);
+    console.log(imageUrl)
+    // const fileUrl = await getFileDownloadURL("files",req.file)
     const projectsData = new Projects({
       imageUrl: imageUrl,
       ...req.body,
+      // fileUrl,
       category: finalCategory,
       socials,
     });
@@ -184,7 +190,7 @@ exports.deleteCollaborator = async (req, res) => {
 
     const project = await Projects.findOneAndUpdate(
       { projectId },
-      { $pull: { collaborators: { userId: userId } } },
+      { $pull: { collaborators: { userId: userId } } }, 
       { new: true }
     );
 

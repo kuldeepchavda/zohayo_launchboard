@@ -1,8 +1,11 @@
 const LocalStrategy = require("passport-local").Strategy;
 const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
+const passport = require("passport");
 const User = require("../models/Users");
-
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const dotenv = require("dotenv");
+dotenv.config();
 const opts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: process.env.JWT_SECRET,
@@ -76,4 +79,30 @@ module.exports = (passport) => {
       }
     })
   );
+
+  passport.use(
+    new GoogleStrategy(
+      {
+        clientID:
+          "909659334820-j1c5kpnk13f63o629154epuc8lthjsfm.apps.googleusercontent.com",
+        clientSecret: "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",
+        callbackURL: "http://localhost:8080/auth/google/callback",
+        passReqToCallback: true,
+      },
+      function (request,accessToken, refreshToken, profile, done) {
+        //   User.findOrCreate({ email: profile.email }, function (err, user) {
+        //     return cb(err, user);
+        //   }
+        // )
+        return done(null, profile);
+      }
+    )
+  );
 };
+passport.serializeUser(function (user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function (user, done) {
+  done(null, user);
+});
