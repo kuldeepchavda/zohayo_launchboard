@@ -28,7 +28,7 @@ const jobSchema = new Schema({
   socialLinks: {
     twitter: { type: String },
     github: { type: String },
-    facebook: { type: String },
+    discord: { type: String },
     linkedin: { type: String },
   },
   description: {

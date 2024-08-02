@@ -4,6 +4,7 @@ const ExtractJwt = require("passport-jwt").ExtractJwt;
 const passport = require("passport");
 const User = require("../models/Users");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const TwitterStrategy = require("passport-twitter").Strategy;
 const dotenv = require("dotenv");
 dotenv.config();
 const opts = {
@@ -83,18 +84,33 @@ module.exports = (passport) => {
   passport.use(
     new GoogleStrategy(
       {
-        clientID:
-          "909659334820-j1c5kpnk13f63o629154epuc8lthjsfm.apps.googleusercontent.com",
+        clientID: "1818946955277721600-dgE1bGniwLwzT1eMjr5muX8FET7oTQ",
         clientSecret: "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",
         callbackURL: "http://localhost:8080/auth/google/callback",
         passReqToCallback: true,
       },
-      function (request,accessToken, refreshToken, profile, done) {
+      function (request, accessToken, refreshToken, profile, done) {
         //   User.findOrCreate({ email: profile.email }, function (err, user) {
         //     return cb(err, user);
         //   }
         // )
         return done(null, profile);
+      }
+    )
+  );
+
+  passport.use(
+    new TwitterStrategy(
+      {
+        consumerKey:
+          "909659334820-j1c5kpnk13f63o629154epuc8lthjsfm.apps.googleusercontent.com",
+        consumerSecret: "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",
+        callbackURL: "http://localhost:8080/auth/twitter/callback",
+      },
+      function (token, tokenSecret, profile, cb) {
+        User.findOrCreate({ twitterId: profile.id }, function (err, user) {
+          return cb(err, user);
+        });
       }
     )
   );

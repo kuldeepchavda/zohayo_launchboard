@@ -14,8 +14,10 @@ exports.createProfile = async (req, res) => {
       userId: req.body.id,
       name: req.body.name,
       bio: req.body.bio,
-      socials: req.body.socials,
-      projectLink: req.body.projectLink,
+      socialLinks: JSON.parse(req.body.socialLinks),
+      coutry:JSON.parse(req.body.country),
+      city:JSON.parse(req.body.city),
+      state:JSON.parse(req.body.state)
     });
     console.log(`user:-${req.body._id} created`);
     await profile.save();
@@ -56,7 +58,15 @@ exports.updateProfile = async (req, res) => {
     const profile = await Profile.findOneAndUpdate(
       { userId: req.params.id },
       {
-        $set: { imageUrl, ...req.body },
+        $set: {
+          imageUrl,
+          ...req.body,
+          language:JSON.parse(req.body.language),
+          socialLinks: JSON.parse(req.body.socialLinks),
+          country: JSON.parse(req.body.country),
+          city: JSON.parse(req.body.city),
+          state: JSON.parse(req.body.state),
+        },
       }
     );
 

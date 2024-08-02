@@ -41,7 +41,7 @@ const userProjectSchema = new Schema({
   socials: {
     twitter: { type: String },
     github: { type: String },
-    facebook: { type: String },
+    discord: { type: String },
     linkedin: { type: String },
   },
   description: {
@@ -52,7 +52,7 @@ const userProjectSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  filesUrl:{type:String}
+  filesUrl: { type: String },
 });
 
 module.exports = mongoose.model("project-launcboard", userProjectSchema);

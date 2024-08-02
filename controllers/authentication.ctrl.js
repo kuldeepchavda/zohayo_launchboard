@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const getJWT = require("../utils/getJWT")
+const {v4:uuid} = require("uuid")
 exports.signup = (req, res, next) => {
   passport.authenticate("signup", (err, user, info) => {
     if (err) {
