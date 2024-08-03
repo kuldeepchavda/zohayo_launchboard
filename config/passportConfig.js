@@ -102,9 +102,8 @@ module.exports = (passport) => {
   passport.use(
     new TwitterStrategy(
       {
-        consumerKey:
-          "909659334820-j1c5kpnk13f63o629154epuc8lthjsfm.apps.googleusercontent.com",
-        consumerSecret: "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",
+        consumerKey: "WUNwcFhMU2cyblE5ckNydC16U3U6MTpjaQ",
+        consumerSecret: "HK16_iPFHIIoScfRHTIlNhIaUM_88swxwpIxc2l9IKqeYD7wG7",
         callbackURL: "http://localhost:8080/auth/twitter/callback",
       },
       function (token, tokenSecret, profile, cb) {
