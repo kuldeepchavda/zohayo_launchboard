@@ -86,14 +86,11 @@ module.exports = (passport) => {
       {
         clientID: "1818946955277721600-dgE1bGniwLwzT1eMjr5muX8FET7oTQ",
         clientSecret: "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",
-        callbackURL: "http://localhost:8080/auth/google/callback",
+        callbackURL:
+          "https://zohayo-launchboard.vercel.app/auth/google/callback",
         passReqToCallback: true,
       },
       function (request, accessToken, refreshToken, profile, done) {
-        //   User.findOrCreate({ email: profile.email }, function (err, user) {
-        //     return cb(err, user);
-        //   }
-        // )
         return done(null, profile);
       }
     )

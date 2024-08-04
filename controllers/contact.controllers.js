@@ -1,9 +1,13 @@
 const ContactData = require("../models/ContactUs")
 
 exports.createContact = async(req,res)=>{
-    const response= await ContactData.create(req.body)
+  try {
+      const response = await ContactData.create(req.body);
 
-    res.send(response)
+      res.send(response);
+  } catch (error) {
+   res.status(404).send(error.message) 
+  }
 }
 
 exports.getAllContacts = async(req,res)=>{
