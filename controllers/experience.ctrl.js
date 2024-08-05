@@ -1,18 +1,23 @@
 const getImageDownloadURL = require("../utils/uploadImage");
 const Experience = require("../models/Experience");
+const getObjKeys = require("../utils/getObjKeys");
+
 exports.createExperience = async (req, res) => {
   try {
     const imageUrl = await getImageDownloadURL("experiences", req.file);
-    const experienceData = new Experience({ imageUrl: imageUrl, ...req.body });
+    const experienceData = new Experience({ imageUrl: imageUrl, ...req.body ,
+      skills:JSON.parse(req.body.skills)
+    });
     await experienceData.save();
     res.status(201).send(experienceData);
   } catch (error) {
-    res.status(400).send(error);
+    const info = getObjKeys(error)
+    res.status(400).json({success:false,message:`${info.path} - (${info.message})`});
   }
 };
-
+  
 exports.getExperiences = async (req, res) => {
-  try {
+  try { 
     const experienceData = await Experience.find();
     res.status(200).send(experienceData);
   } catch (error) {

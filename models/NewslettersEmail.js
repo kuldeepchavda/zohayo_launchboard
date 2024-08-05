@@ -4,22 +4,22 @@ const mongoose = require("mongoose");
 const emailSchema = new mongoose.Schema({
   email: {
     type: String,
-    required: true,
-    unique: true,
+    required: [true, "Email is required"],
+    trim: true,
+    lowercase: true,
     validate: {
       validator: function (v) {
-        return v.includes("@") && v.includes(".");
+        return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(v);
       },
-      message: (props) => `${props.value} is not a valid email!`,
+      message: (props) => `${props.value} is not a valid email address!`,
     },
   },
-  timestamp:{
-    type:Date,
-    default:Date.now  
-  }
+  timestamp: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 // Create the Email model
 const Email = mongoose.model("Email", emailSchema);
-
 module.exports = Email;

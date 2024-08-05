@@ -84,10 +84,12 @@ module.exports = (passport) => {
   passport.use(
     new GoogleStrategy(
       {
-        clientID: "1818946955277721600-dgE1bGniwLwzT1eMjr5muX8FET7oTQ",
+        clientID:
+          "909659334820-j1c5kpnk13f63o629154epuc8lthjsfm.apps.googleusercontent.com",
         clientSecret: "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",
-        callbackURL:
-          "https://zohayo-launchboard.vercel.app/auth/google/callback",
+        callbackURL: "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",
+        //  "http://localhost:8080/auth/google/callback",
+
         passReqToCallback: true,
       },
       function (request, accessToken, refreshToken, profile, done) {

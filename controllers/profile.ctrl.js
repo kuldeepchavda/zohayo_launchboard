@@ -1,29 +1,31 @@
 const Profile = require("../models/Profile");
 const getImageDownloadURL = require("../utils/uploadImage");
+
 // Create a new profile
 exports.createProfile = async (req, res) => {
   try {
-    const imageUrl = await getImageDownloadURL(
-      "/launchBoard",
-      req.file
-    );
-     console.log(imageUrl);
-     console.log("body", req.body);
-    const profile = new Profile({
-      imageUrl: imageUrl,
-      userId: req.body.id,
-      name: req.body.name,
-      bio: req.body.bio,
+    const imageUrl = await getImageDownloadURL("/launchBoard", req.file);
+
+    const jsonData = {
       socialLinks: JSON.parse(req.body.socialLinks),
-      coutry:JSON.parse(req.body.country),
-      city:JSON.parse(req.body.city),
-      state:JSON.parse(req.body.state)
-    });
-    console.log(`user:-${req.body._id} created`);
+      country: JSON.parse(req.body.country),
+      city: JSON.parse(req.body.city),
+      state: JSON.parse(req.body.state),
+      language: JSON.parse(req.body.language),
+    };
+
+    const profileData = {
+      imageUrl,
+      ...req.body,
+      ...jsonData,
+    };
+
+    const profile = new Profile(profileData);
     await profile.save();
-    res.status(201).json(profile);
+
+    res.status(201).json({ success: true, data: profile });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ success: false, message: error.message });
   }
 };
 
@@ -31,9 +33,9 @@ exports.createProfile = async (req, res) => {
 exports.getProfiles = async (req, res) => {
   try {
     const profiles = await Profile.find();
-    res.status(200).json(profiles);
+    res.status(200).json({ success: true, data: profiles });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ success: false, message: error.message });
   }
 };
 
@@ -41,45 +43,48 @@ exports.getProfiles = async (req, res) => {
 exports.getProfileById = async (req, res) => {
   try {
     const profile = await Profile.findOne({ userId: req.params.id });
-    if (!profile) return res.status(404).json({ message: "Profile not found" });
-    res.status(200).json(profile);
+    if (!profile) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Profile not found" });
+    }
+    res.status(200).json({ success: true, data: profile });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ success: false, message: error.message });
   }
 };
 
 // Update a profile by ID
 exports.updateProfile = async (req, res) => {
   try {
-    const imageUrl = await getImageDownloadURL("launchBoard", req.file);
-    console.log(imageUrl)
-    // console.log(imageUrl);
-    console.log("body",req.body)
+    const updates = { ...req.body };
+
+    if (req.file) {
+      updates.imageUrl = await getImageDownloadURL("launchBoard", req.file);
+    }
+
+    // Parse the stringified JSON fields
+    updates.language = JSON.parse(req.body.language);
+    updates.socialLinks = JSON.parse(req.body.socialLinks);
+    updates.country = JSON.parse(req.body.country);
+    updates.city = JSON.parse(req.body.city);
+    updates.state = JSON.parse(req.body.state);
+
     const profile = await Profile.findOneAndUpdate(
       { userId: req.params.id },
-      {
-        $set: {
-          imageUrl,
-          ...req.body,
-          language:JSON.parse(req.body.language),
-          socialLinks: JSON.parse(req.body.socialLinks),
-          country: JSON.parse(req.body.country),
-          city: JSON.parse(req.body.city),
-          state: JSON.parse(req.body.state),
-        },
-      }
+      { $set: updates },
+      { new: true } // Return the updated document
     );
 
     if (!profile) {
-      return res.status(404).json({ message: "Profile not found" });
-    } else {
-      res.status(200).json(profile);
-      console.log(`${req.params.id} updated`);
-      console.log(profile)
+      return res
+        .status(404)
+        .json({ success: false, message: "Profile not found" });
     }
+
+    res.status(200).json({ success: true, data: profile });
   } catch (error) {
-    console.log(error)
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ success: false, message: error.message });
   }
 };
 
@@ -87,13 +92,17 @@ exports.updateProfile = async (req, res) => {
 exports.deleteProfile = async (req, res) => {
   try {
     const profile = await Profile.findOneAndDelete({ userId: req.params.id });
+
     if (!profile) {
-      return res.status(404).json({ message: "Profile not found" });
-    } else {
-      res.status(200).json({ message: "Profile deleted successfully" });
-      console.log(`${req.params.id} deleted`);
+      return res
+        .status(404)
+        .json({ success: false, message: "Profile not found" });
     }
+
+    res
+      .status(200)
+      .json({ success: true, message: "Profile deleted successfully" });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ success: false, message: error.message });
   }
-}
+};
