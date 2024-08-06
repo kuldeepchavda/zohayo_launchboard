@@ -21,6 +21,10 @@ router.route("/update/:id").put(upload.single("image"), profileCTRLs.updateProfi
 
 // Delete a profile by ID
 router.delete("/delete/:id", profileCTRLs.deleteProfile);
+ 
+
+// Route for search email
+router.get("/search", profileCTRLs.searchEmail);
 
 module.exports = router;
 

@@ -21,7 +21,9 @@ const feedRoutes = require("./routes/feeds.routes");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const session = require("express-session");
-app.use(cors());
+app.use(cors({
+  origin: '*',
+}));
 const passport = require("passport");
 // Use middleware
 app.use(bodyParser.urlencoded({ extended: false }));

@@ -23,7 +23,7 @@ const jobSchema = new Schema({
   },
   jobType: {
     type: String,
-    enum: ["Full-time", "Part-time", "Contract", "Temporary", "Internship"],
+    enum: ["Full-Time", "Part-Time", "Contract", "Temporary", "Internship"],
     required: true,
   },
   compensationType: {

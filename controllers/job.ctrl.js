@@ -1,24 +1,28 @@
 const Job = require("../models/Job");
 const getImageDownloadURL = require("../utils/uploadImage");
-
+const { v4:uuid } = require('uuid')
 exports.createJob = async (req, res) => {
   try {
+
+    // EDITING JOB MODEL
+
     let imageUrl = "";
     if (req.file) {
       imageUrl = await getImageDownloadURL("jobs", req.file);
     }
-    console.log(req.body)
-console.log(imageUrl)
+    console.log(req.body);
+    console.log(imageUrl);
     // category;
-    const categoryComponents = req.body.requirements
-console.log(categoryComponents);
-    
-    const socialLinks = JSON.parse(req.body.socialLinks)
-    console.log(socialLinks)
-    
+    const categoryComponents = req.body.requirements;
+    console.log(categoryComponents);
 
-    
+    const socialLinks = JSON.parse(req.body.socialLinks);
+    console.log(socialLinks);
+
+    // NO JOB ID PASSED
+
     const job = new Job({
+      jobId: uuid(),
       ...req.body,
       imageUrl,
       socialLinks,
@@ -26,9 +30,8 @@ console.log(categoryComponents);
     });
 
     console.log(job);
-  console.log("//////")
     await job.save();
-    console.log(job)
+    console.log(job);
     res.status(201).send(job);
   } catch (error) {
     res.status(404).send(error.message);
@@ -74,11 +77,10 @@ exports.updateJobByJobId = async (req, res) => {
       updates.imageUrl = await getImageDownloadURL("jobs", req.file);
     }
 
-    const job = await Job.findOneAndUpdate(
-      { jobId: req.params.id },
-      updates,
-      { new: true, runValidators: true }
-    );
+    const job = await Job.findOneAndUpdate({ jobId: req.params.id }, updates, {
+      new: true,
+      runValidators: true,
+    });
     if (!job) {
       return res.status(404).send("Job does not exists.");
     }
@@ -90,7 +92,10 @@ exports.updateJobByJobId = async (req, res) => {
 
 exports.deleteJob = async (req, res) => {
   try {
-    const job = await Job.findOneAndDelete({jobId:req.params.id});
+
+    // VALIDATE THE USER BEFORE DELETING
+
+    const job = await Job.findOneAndDelete({ jobId: req.params.id });
     if (!job) {
       return res.status(404).send();
     }
