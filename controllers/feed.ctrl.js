@@ -28,7 +28,7 @@ exports.jobFeed = async (req, res) => {
     const categoryArray = category ? category.split(",") : [];
 
     const filter = {};
-    if (categoryArray.length > 0) {
+    if (categoryArray.length > 0 && categoryArray[0].toLowerCase() !== 'all') {
       filter.category = { $in: categoryArray };
     }
     if (jobType) {
@@ -37,7 +37,7 @@ exports.jobFeed = async (req, res) => {
     if (compensation) {
       filter.compensationType = new RegExp(`^${compensation}$`, "i"); // Case-insensitive match
     }
-
+    console.log(filter)
     const jobs = await Job.find(filter);
     res.json(jobs);
   } catch (error) {

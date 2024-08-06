@@ -5,6 +5,7 @@ const profileSchema = new mongoose.Schema(
     userId: {
       type: String,
       required: true,
+      unique: true
     },
     imageUrl: {
       type: String,
@@ -12,7 +13,10 @@ const profileSchema = new mongoose.Schema(
     },
     firstName: {
       type: String,
+<<<<<<< HEAD
       // required: true,
+=======
+>>>>>>> bcdfd46163b4be4e7d7edad48c23f0c2b27d544b
       trim: true,
     },
     middleName: {
@@ -21,7 +25,10 @@ const profileSchema = new mongoose.Schema(
     },
     lastName: {
       type: String,
+<<<<<<< HEAD
       // required: true,
+=======
+>>>>>>> bcdfd46163b4be4e7d7edad48c23f0c2b27d544b
       trim: true,
     },
     email: {
@@ -32,20 +39,20 @@ const profileSchema = new mongoose.Schema(
       lowercase: true,
     },
     country: {
-      id: { type: Number, required: true },
-      name: { type: String, required: true },
+      id: { type: Number },
+      name: { type: String },
     },
     state: {
-      id: { type: Number, required: true },
-      name: { type: String, required: true },
+      id: { type: Number },
+      name: { type: String },
     },
     city: {
-      id: { type: Number, required: true },
-      name: { type: String, required: true },
+      id: { type: Number },
+      name: { type: String },
     },
     language: {
-      name: { type: String, required: true },
-      code: { type: String, required: true, uppercase: true },
+      name: { type: String },
+      code: { type: String },
     },
     bio: {
       type: String,
