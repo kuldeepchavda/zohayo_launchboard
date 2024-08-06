@@ -25,6 +25,11 @@ router.put(
 );
 router.delete("/delete/:id", projectsControllers.deleteProject);
 
+router.put("/delete/file/:projectId/:fileId",projectsControllers.fileDelete)
+
+
+
+
 // routes for collaborators
 router
   .route("/collaborator/create/:projectId")

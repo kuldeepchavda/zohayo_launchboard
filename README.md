@@ -275,6 +275,12 @@
 - **Method** : `DELETE`
 - **Desc** :DELETE project by user id
 
+#### 5.1.7 file delete
+
+- **EndPoint**:`/delete/file/:projectId/:fileId`
+- **Method** : `put`
+- **Desc** :DELETE project by user id
+
 #### 5.2 COLLABORATORS
 
 #### 5.2.1 add collaborator
@@ -306,8 +312,7 @@
 - **Method** : `get`
 - **Desc** :get all the projects with particular userId in collaborators
 
-
-#### 5.2.3 update informations of particular collaborator in particular `projectId` 
+#### 5.2.3 update informations of particular collaborator in particular `projectId`
 
 - **EndPoint**:`/collaborator/update/:projectId/:userId`
 - **Method** : `PUT`
@@ -318,9 +323,8 @@
   - **request file**
     -- an image with file named "image"
 - **Request Body**:
-as of in create , but only the fields which are need to be changed
+  as of in create , but only the fields which are need to be changed
   ##as required##
-
 
 #### 5.2.4 delete collaborator from particular project
 
@@ -411,15 +415,22 @@ as of in create , but only the fields which are need to be changed
 - **Method** : `DELETE`
 - **Desc** :DELETE job by user id
 
+#### 6.7 file delete
+
+- **EndPoint**:`/delete/file/:jobId/:fileId`
+- **Method** : `put`
+- **Desc** :DELETE job by user id
 
 ### 7. Base URL: `/feeds`
 
-
 #### 7.1 to get all or filter out the jobs
+
 ## description:-TO filter out the projects accordingly
+
 ### Reast url `localhost:8080/feeds/project?category=Infrastructure,AI`
 
-
 #### 7.1 to get all or filter out the jobs
+
 ## description:-TO filter out the jobs accordingly
+
 ### Reast url `localhost:8080/feeds/job?jobType=half&compensation=`

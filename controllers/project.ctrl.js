@@ -1,27 +1,27 @@
 const getImageDownloadURL = require("../utils/uploadImage");
-const getFileDownloadURL = require("../utils/getFileDownloadUrl")
+const getFileDownloadURL = require("../utils/getFileDownloadUrl");
 const Projects = require("../models/Projects");
 // const { link } = require("../routes/projects.routes");
 exports.createProject = async (req, res) => {
   try {
-    const { category,linkedin, discord, twitter, github } = req.body;
+    const { category, linkedin, discord, twitter, github } = req.body;
     //categories
- console.log(req.body)
+    console.log(req.body);
     const socials = {
       twitter: twitter,
       github: github,
-      discord:discord,
+      discord: discord,
       linkedin: linkedin,
     };
-const imageFile = req.files?.image?.[0];
-const otherFiles = req.files?.files || [];
+    const imageFile = req.files?.image?.[0];
+    const otherFiles = req.files?.files || [];
     const imageUrl = await getImageDownloadURL("testings/images", imageFile);
 
     // Upload each file in the "filess" array and store their URLs
     const fileUrls = await Promise.all(
       otherFiles.map((file) => getFileDownloadURL("testings/files", file))
     );
-    console.log(imageUrl,fileUrls)
+    console.log(imageUrl, fileUrls);
     const projectsData = new Projects({
       imageUrl: imageUrl,
       ...req.body,
@@ -94,7 +94,7 @@ exports.updateProjectById = async (req, res) => {
 exports.deleteProject = async (req, res) => {
   try {
     const projectsData = await Projects.deleteMany({
-      // projectId: req.params.id,
+      projectId: req.params.id,
     });
     if (!projectsData) {
       return res.status(404).send("doesn't exists");
@@ -106,6 +106,18 @@ exports.deleteProject = async (req, res) => {
 };
 
 //  ***************************************************************************************************************// collaborators
+//file operations
+
+exports.fileDelete = async (req, res) => {
+  const { projectId, fileId } = req.params;
+  const project = await Projects.findOne({ projectId });
+  console.log(project);
+  const particularFile = project.fileUrls.find((file) => file.fileId == fileId);
+  const ind = project.fileUrls.indexOf(particularFile);
+  project.fileUrls.splice(ind, 1);
+  project.save();
+  res.send(project);
+};
 
 // to add collaborator
 exports.createCollaborator = async (req, res) => {
@@ -185,7 +197,7 @@ exports.deleteCollaborator = async (req, res) => {
 
     const project = await Projects.findOneAndUpdate(
       { projectId },
-      { $pull: { collaborators: { userId: userId } } }, 
+      { $pull: { collaborators: { userId: userId } } },
       { new: true }
     );
 

@@ -97,3 +97,16 @@ exports.deleteJob = async (req, res) => {
     res.status(400).send(error);
   }
 };
+
+
+exports.fileDelete = async (req, res) => {
+  const { jobId, fileId } = req.params;
+  const job = await Job.findOne({ jobId });
+  console.log(job);
+  const particularFile = job.fileUrls.find((file) => file.fileId == fileId);
+  console.log("the file is",particularFile)
+  const ind = job.fileUrls.indexOf(particularFile);
+  job.fileUrls.splice(ind, 1);
+  await job.save();
+  res.send(job);
+};

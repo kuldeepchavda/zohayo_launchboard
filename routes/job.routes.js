@@ -18,4 +18,6 @@ router.get("/get/jobid/:id", jobController.getJobByJobId);
 router.get("/get/userid/:id", jobController.getJobsByUserId);
 router.put("/update/:id", upload.single("image"), jobController.updateJobByJobId);
 router.delete("/delete/:id", jobController.deleteJob);
+router.put("/delete/file/:jobId/:fileId", jobController.fileDelete);
+
 module.exports = router;
