@@ -13,7 +13,20 @@ const CollaboratorSchema = new Schema({
   workingCurrently: { type: Boolean, default: false },
   taskAssigned: { type: String, trim: true },
 });
-
+const fileSchema = mongoose.Schema({
+  fileId: {
+    type: String,
+    required: true,
+  },
+  fileName: {
+    type: String,
+    required: true,
+  },
+  fileUrl: {
+    type: String,
+    required: true,
+  },
+});
 const userProjectSchema = new Schema({
   userId: {
     type: String,
@@ -26,6 +39,7 @@ const userProjectSchema = new Schema({
     unique: true,
     trim: true,
   },
+  fileUrls: [fileSchema],
   imageUrl: {
     type: String,
     trim: true,
@@ -43,7 +57,7 @@ const userProjectSchema = new Schema({
     trim: true,
   },
   stageOfProject: {
-    type: [String],
+    type: String,
   },
   socials: {
     twitter: { type: String, trim: true },

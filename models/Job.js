@@ -1,11 +1,27 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const fileSchema = mongoose.Schema({
+  fileId: {
+    type: String,
+    required: true,
+  },
+  fileName: {
+    type: String,
+    required: true,
+  },
+  fileUrl: {
+    type: String,
+    required: true,
+  },
+});
+
 const jobSchema = new Schema({
   userId: {
     type: String,
     required: true,
   },
+
   jobId: {
     type: String,
     required: true,
@@ -45,6 +61,12 @@ const jobSchema = new Schema({
     type: String,
     required: true,
   },
+  imageUrl: {
+    type: String,
+    trim: true,
+  },
+
+  fileUrls: [fileSchema],
   imageUrl: {
     type: String,
     trim: true,

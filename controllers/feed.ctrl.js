@@ -5,10 +5,10 @@ exports.projectFeed = async (req, res) => {
     let queryCategories = [];
 
     // Handling both comma-separated values and multiple query parameters
-    if (req.query.requirements) {
+    if (req.query.category) {
       queryCategories = req.query.category.split(",");
       const projects = await Projects.find({
-        requirements: { $in: queryCategories },
+        category: { $in: queryCategories },
       });
       res.status(200).json(projects);
     } else {

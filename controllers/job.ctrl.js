@@ -1,32 +1,31 @@
 const Job = require("../models/Job");
 const getImageDownloadURL = require("../utils/uploadImage");
-
+const getFileDownloadURL = require("../utils/getFileDownloadUrl")
 exports.createJob = async (req, res) => {
   try {
-    let imageUrl = "";
-    if (req.file) {
-      imageUrl = await getImageDownloadURL("jobs", req.file);
-    }
-    console.log(req.body)
-console.log(imageUrl)
-    // category;
-    const categoryComponents = req.body.requirements
-console.log(categoryComponents);
-    
-    const socialLinks = JSON.parse(req.body.socialLinks)
-    console.log(socialLinks)
-    
+const imageFile = req.files?.image?.[0];
+const otherFiles = req.files?.files || [];
+const imageUrl = await getImageDownloadURL("testings/images", imageFile);
 
-    
+// Upload each file in the "filess" array and store their URLs
+const fileUrls = await Promise.all(
+  otherFiles.map((file) => getFileDownloadURL("testings/files", file))
+);
+console.log(imageUrl, fileUrls);
+
+    console.log(req.body);
+    // category;
+    const categoryComponents = req.body.requirements;
+    console.log(categoryComponents);
+    const socialLinks = JSON.parse(req.body.socialLinks);
+    console.log(socialLinks);
     const job = new Job({
       ...req.body,
+      fileUrls,
       imageUrl,
       socialLinks,
       requirements: JSON.parse(req.body.requirements),
-    });
-
-    console.log(job);
-  console.log("//////")
+    }); 
     await job.save();
     console.log(job)
     res.status(201).send(job);
@@ -74,11 +73,10 @@ exports.updateJobByJobId = async (req, res) => {
       updates.imageUrl = await getImageDownloadURL("jobs", req.file);
     }
 
-    const job = await Job.findOneAndUpdate(
-      { jobId: req.params.id },
-      updates,
-      { new: true, runValidators: true }
-    );
+    const job = await Job.findOneAndUpdate({ jobId: req.params.id }, updates, {
+      new: true,
+      runValidators: true,
+    });
     if (!job) {
       return res.status(404).send("Job does not exists.");
     }
@@ -90,7 +88,7 @@ exports.updateJobByJobId = async (req, res) => {
 
 exports.deleteJob = async (req, res) => {
   try {
-    const job = await Job.findOneAndDelete({jobId:req.params.id});
+    const job = await Job.findOneAndDelete({ jobId: req.params.id });
     if (!job) {
       return res.status(404).send();
     }

@@ -1,5 +1,6 @@
 const dotenv = require("dotenv");
 dotenv.config();
+const cookieParser = require("cookie-parser");
 const PORT = process.env.PORT || 5000; // Default to port 5000 if PORT is not defined
 const express = require("express");
 const mongoose = require("mongoose");
@@ -21,12 +22,13 @@ const feedRoutes = require("./routes/feeds.routes");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const session = require("express-session");
-app.use(cors());
 const passport = require("passport");
 // Use middleware
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.json());
+app.use(cookieParser());
 
 require("./config/passportConfig")(passport);
 app.use(

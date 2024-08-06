@@ -29,13 +29,21 @@ router.get("/got_from_google", async (req, res) => {
   console.log(user);
   if (user) {
     const token = getJWT(req.user.userId, email);
-    res.send({ msg: "logged in", token, user });
+    res
+      .status(200)
+      .cookie("jwt", token)
+      .cookie("userId", user.userId)
+      .send({ msg: "logged in", token, user });
   } else {
     const userId = uuid();
     const user = await User.create({ email, userId });
     const profile = await Profile.create({ email, userId });
     const token = getJWT(userId, email);
-    res.send({ msg: "Signed up", token, user, profile });
+    res
+      .status(200)
+      .cookie("jwt", token)
+      .cookie("userId", userId)
+      .json({ msg: "Signed up", token, user, profile });
   }
 });
 router.route("/google/failure", (req, res) => {
@@ -57,4 +65,3 @@ router.get(
   }
 );
 module.exports = router;
- 

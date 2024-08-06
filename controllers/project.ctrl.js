@@ -4,34 +4,29 @@ const Projects = require("../models/Projects");
 // const { link } = require("../routes/projects.routes");
 exports.createProject = async (req, res) => {
   try {
-    const { category,linkedin, facebook, twitter, github } = req.body;
+    const { category,linkedin, discord, twitter, github } = req.body;
     //categories
-    console.log(req.file)
-    const finalCategory = [];
-    const categoryComponents = category.split(" ");
-    categoryComponents.map((cat) => {
-      if (finalCategory.indexOf(cat) == -1) {
-        finalCategory.push(cat);
-      }
-    });
-
-    // socials
-
+ console.log(req.body)
     const socials = {
       twitter: twitter,
       github: github,
       discord:discord,
       linkedin: linkedin,
     };
+const imageFile = req.files?.image?.[0];
+const otherFiles = req.files?.files || [];
+    const imageUrl = await getImageDownloadURL("testings/images", imageFile);
 
-    const imageUrl = await getImageDownloadURL("projects", req.file);
-    console.log(imageUrl)
-    // const fileUrl = await getFileDownloadURL("files",req.file)
+    // Upload each file in the "filess" array and store their URLs
+    const fileUrls = await Promise.all(
+      otherFiles.map((file) => getFileDownloadURL("testings/files", file))
+    );
+    console.log(imageUrl,fileUrls)
     const projectsData = new Projects({
       imageUrl: imageUrl,
       ...req.body,
-      // fileUrl,
-      category: finalCategory,
+      fileUrls,
+      category: JSON.parse(req.body.category),
       socials,
     });
     await projectsData.save();

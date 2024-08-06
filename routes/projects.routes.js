@@ -8,11 +8,11 @@ const upload = multer({ storage });
 
 router.post(
   "/create",
-  upload.single("image"),
-  // upload.fields([
-  //   { name: "image", maxCount: 1 },
-    // { name: "documents", maxCount: 1 },
-  // ]),
+  upload.fields([
+    { name: "image", maxCount: 1 },
+    { name: "files", maxCount: 10 }, // Allow up to 10 files under "filess"
+  ]),
+
   projectsControllers.createProject
 ),
   router.get("/getall", projectsControllers.getProjects);
