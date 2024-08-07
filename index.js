@@ -25,7 +25,6 @@ const session = require("express-session");
 app.use(cors({
   origin: '*',
 }));
-// >>>>>>> bcdfd46163b4be4e7d7edad48c23f0c2b27d544b
 const passport = require("passport");
 // Use middleware
 app.use(cors());
