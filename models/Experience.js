@@ -12,7 +12,7 @@ const userExperienceSchema = new Schema({
     type: String,
     required: [true, "Experience ID is required"],
     trim: true,
-    // unique: true,
+    unique: true,
     minlength: [1, "Experience ID must be at least 1 character long"],
   },
   imageUrl: {

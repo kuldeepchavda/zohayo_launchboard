@@ -13,10 +13,7 @@ const profileSchema = new mongoose.Schema(
     },
     firstName: {
       type: String,
-<<<<<<< HEAD
       // required: true,
-=======
->>>>>>> bcdfd46163b4be4e7d7edad48c23f0c2b27d544b
       trim: true,
     },
     middleName: {
@@ -25,10 +22,7 @@ const profileSchema = new mongoose.Schema(
     },
     lastName: {
       type: String,
-<<<<<<< HEAD
       // required: true,
-=======
->>>>>>> bcdfd46163b4be4e7d7edad48c23f0c2b27d544b
       trim: true,
     },
     email: {

@@ -1,6 +1,5 @@
 const Job = require("../models/Job");
 const getImageDownloadURL = require("../utils/uploadImage");
-<<<<<<< HEAD
 const getFileDownloadURL = require("../utils/getFileDownloadUrl")
 exports.createJob = async (req, res) => {
   try {
@@ -20,29 +19,6 @@ console.log(imageUrl, fileUrls);
     console.log(categoryComponents);
     const socialLinks = JSON.parse(req.body.socialLinks);
     console.log(socialLinks);
-=======
-const { v4:uuid } = require('uuid')
-exports.createJob = async (req, res) => {
-  try {
-
-    // EDITING JOB MODEL
-
-    let imageUrl = "";
-    if (req.file) {
-      imageUrl = await getImageDownloadURL("jobs", req.file);
-    }
-    console.log(req.body);
-    console.log(imageUrl);
-    // category;
-    const categoryComponents = req.body.requirements;
-    console.log(categoryComponents);
-
-    const socialLinks = JSON.parse(req.body.socialLinks);
-    console.log(socialLinks);
-
-    // NO JOB ID PASSED
-
->>>>>>> bcdfd46163b4be4e7d7edad48c23f0c2b27d544b
     const job = new Job({
       jobId: uuid(),
       ...req.body,
@@ -50,13 +26,7 @@ exports.createJob = async (req, res) => {
       imageUrl,
       socialLinks,
       requirements: JSON.parse(req.body.requirements),
-<<<<<<< HEAD
     }); 
-=======
-    });
-
-    console.log(job);
->>>>>>> bcdfd46163b4be4e7d7edad48c23f0c2b27d544b
     await job.save();
     console.log(job);
     res.status(201).send(job);
@@ -119,12 +89,6 @@ exports.updateJobByJobId = async (req, res) => {
 
 exports.deleteJob = async (req, res) => {
   try {
-<<<<<<< HEAD
-=======
-
-    // VALIDATE THE USER BEFORE DELETING
-
->>>>>>> bcdfd46163b4be4e7d7edad48c23f0c2b27d544b
     const job = await Job.findOneAndDelete({ jobId: req.params.id });
     if (!job) {
       return res.status(404).send();
