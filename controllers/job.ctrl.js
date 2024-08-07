@@ -1,7 +1,8 @@
 const Job = require("../models/Job");
 const getImageDownloadURL = require("../utils/uploadImage");
-<<<<<<< HEAD
 const getFileDownloadURL = require("../utils/getFileDownloadUrl")
+const { v4: uuidv4 } = require("uuid");
+
 exports.createJob = async (req, res) => {
   try {
 const imageFile = req.files?.image?.[0];
@@ -13,52 +14,23 @@ const fileUrls = await Promise.all(
   otherFiles.map((file) => getFileDownloadURL("testings/files", file))
 );
 console.log(imageUrl, fileUrls);
-
+const jobId = uuidv4();
     console.log(req.body);
     // category;
     const categoryComponents = req.body.requirements;
     console.log(categoryComponents);
     const socialLinks = JSON.parse(req.body.socialLinks);
     console.log(socialLinks);
-=======
-const { v4:uuid } = require('uuid')
-exports.createJob = async (req, res) => {
-  try {
-
-    // EDITING JOB MODEL
-
-    let imageUrl = "";
-    if (req.file) {
-      imageUrl = await getImageDownloadURL("jobs", req.file);
-    }
-    console.log(req.body);
-    console.log(imageUrl);
-    // category;
-    const categoryComponents = req.body.requirements;
-    console.log(categoryComponents);
-
-    const socialLinks = JSON.parse(req.body.socialLinks);
-    console.log(socialLinks);
-
-    // NO JOB ID PASSED
-
->>>>>>> bcdfd46163b4be4e7d7edad48c23f0c2b27d544b
     const job = new Job({
-      jobId: uuid(),
       ...req.body,
       fileUrls,
       imageUrl,
+      jobId,
       socialLinks,
       requirements: JSON.parse(req.body.requirements),
-<<<<<<< HEAD
     }); 
-=======
-    });
-
-    console.log(job);
->>>>>>> bcdfd46163b4be4e7d7edad48c23f0c2b27d544b
     await job.save();
-    console.log(job);
+    console.log(job)
     res.status(201).send(job);
   } catch (error) {
     res.status(404).send(error.message);
@@ -119,12 +91,6 @@ exports.updateJobByJobId = async (req, res) => {
 
 exports.deleteJob = async (req, res) => {
   try {
-<<<<<<< HEAD
-=======
-
-    // VALIDATE THE USER BEFORE DELETING
-
->>>>>>> bcdfd46163b4be4e7d7edad48c23f0c2b27d544b
     const job = await Job.findOneAndDelete({ jobId: req.params.id });
     if (!job) {
       return res.status(404).send();
@@ -135,13 +101,12 @@ exports.deleteJob = async (req, res) => {
   }
 };
 
-
 exports.fileDelete = async (req, res) => {
   const { jobId, fileId } = req.params;
   const job = await Job.findOne({ jobId });
   console.log(job);
   const particularFile = job.fileUrls.find((file) => file.fileId == fileId);
-  console.log("the file is",particularFile)
+  console.log("the file is", particularFile);
   const ind = job.fileUrls.indexOf(particularFile);
   job.fileUrls.splice(ind, 1);
   await job.save();

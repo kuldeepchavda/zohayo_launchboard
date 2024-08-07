@@ -1,11 +1,14 @@
 const getImageDownloadURL = require("../utils/uploadImage");
 const getFileDownloadURL = require("../utils/getFileDownloadUrl");
 const Projects = require("../models/Projects");
+const { v4: uuidv4 } = require("uuid");
+
 // const { link } = require("../routes/projects.routes");
 exports.createProject = async (req, res) => {
   try {
     const { category, linkedin, discord, twitter, github } = req.body;
     //categories
+    const projectId = uuidv4();
     console.log(req.body);
     const socials = {
       twitter: twitter,
@@ -24,6 +27,7 @@ exports.createProject = async (req, res) => {
     console.log(imageUrl, fileUrls);
     const projectsData = new Projects({
       imageUrl: imageUrl,
+      projectId,
       ...req.body,
       fileUrls,
       category: JSON.parse(req.body.category),
@@ -93,7 +97,7 @@ exports.updateProjectById = async (req, res) => {
 
 exports.deleteProject = async (req, res) => {
   try {
-    const projectsData = await Projects.deleteMany({
+    const projectsData = await Projects.deleteOneAndDelete({
       projectId: req.params.id,
     });
     if (!projectsData) {
