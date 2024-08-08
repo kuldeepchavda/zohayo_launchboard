@@ -26,6 +26,7 @@ app.use(cors({
   origin: '*',
 }));
 const passport = require("passport");
+const twitterStrategy = require("passport-twitter")
 // Use middleware
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -34,6 +35,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 require("./config/passportConfig")(passport);
+passport.use(twitterStrategy)
 app.use(
   session({
     secret: process.env.SESSION_SECRET,

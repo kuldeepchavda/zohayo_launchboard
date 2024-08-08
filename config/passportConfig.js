@@ -5,6 +5,7 @@ const passport = require("passport");
 const User = require("../models/Users");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const TwitterStrategy = require("passport-twitter").Strategy;
+const LinkedInStrategy = require("passport-linkedin-oauth2").Strategy;
 const dotenv = require("dotenv");
 dotenv.config();
 const opts = {
@@ -102,17 +103,38 @@ module.exports = (passport) => {
   passport.use(
     new TwitterStrategy(
       {
-        consumerKey: "WUNwcFhMU2cyblE5ckNydC16U3U6MTpjaQ",
-        consumerSecret: "HK16_iPFHIIoScfRHTIlNhIaUM_88swxwpIxc2l9IKqeYD7wG7",
+        consumerKey: process.env.TWITTER_CLIENT_ID,
+        consumerSecret: process.env.TWITTER_CLIENT_SECRET,
         callbackURL: "http://localhost:8080/auth/twitter/callback",
       },
-      function (token, tokenSecret, profile, cb) {
-        User.findOrCreate({ twitterId: profile.id }, function (err, user) {
-          return cb(err, user);
-        });
+      function (token, tokenSecret, profile, done) {
+        // User.findOrCreate({ twitterId: profile.id }, function (err, user) {
+          console.log(profile)
+          return done(null, profile);
+        // });
       }
     )
   );
+passport.use(
+  new LinkedInStrategy(
+    {
+      clientID: process.env.LINKEDIN_KEY,
+      clientSecret:process.env.LINKEDIN_SECRET,
+      callbackURL: "http://localhost:8080/auth/linkedin/callback",
+      // scope: ["r_emailaddress", "r_liteprofile"],
+    },
+    function (accessToken, refreshToken, profile, done) {
+      // asynchronous verification, for effect...
+      // process.nextTick(function () {
+        // To keep the example simple, the user's LinkedIn profile is returned to
+        // represent the logged-in user. In a typical application, you would want
+        // to associate the LinkedIn account with a user record in your database,
+        // and return that user instead.
+        return done(null, profile);
+      // });
+    }
+  )
+);
 };
 passport.serializeUser(function (user, done) {
   done(null, user);

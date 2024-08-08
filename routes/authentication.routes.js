@@ -58,10 +58,38 @@ router.get("/twitter", passport.authenticate("twitter"));
 
 router.get(
   "/twitter/callback",
-  passport.authenticate("twitter"),
-  function (req, res) {
-    // Successful authentication,
-    res.redirect("/");
-  }
+  passport.authenticate("twitter",{
+    successRedirect:"/auth/twitter/success",
+    failureRedirect:"/auth/twitter/failure"
+  })
 );
+router.get("/twitter/success",(async (req,res)=>{
+res.json(JSON.parse(req.user._raw))
+console.log(req)
+}))
+
+router.get("/signin_with_linkedin", (req, res) => {
+  res.send('<a href="/auth/linkedin">Sign in with linkedin</a>');
+});
+router.get(
+  "/linkedin",
+  passport.authenticate("linkedin"),
+);
+router.get(
+  "/linkedin/callback",
+  passport.authenticate("linkedin", {
+    successRedirect: "/auth/linkedin/success",
+    failureRedirect: "/auth/linkedin/failure",
+  })
+);
+
+
+router.get("/linkedin/success", async (req, res) => {
+  res.json(req);
+  console.log(req.user);
+});
 module.exports = router;
+  // passport.authenticate("google", {
+  //   successRedirect: "/auth/got_from_google",
+  //   failureRedirect: "/auth/google/failure",
+  // });
