@@ -26,15 +26,20 @@ router.get(
 router.get("/got_from_google", async (req, res) => {
   const email = req.user.emails[0].value;
   const user = await User.findOne({ email: email });
-  console.log(user);
+  // console.log(user);
   if (user) {
+    console.log("got if");
+
     const token = getJWT(req.user.userId, email);
+    // console.log(req.user)
     res
-      .status(200)
+      // .status(200)
       .cookie("jwt", token)
       .cookie("userId", user.userId)
-      .send({ msg: "logged in", token, user });
-  } else {
+      // .send({ msg: "logged in", token, user });
+    res.redirect("http://localhost:5173/");
+  } else  {
+    console.log("got else")
     const userId = uuid();
     const user = await User.create({ email, userId });
     const profile = await Profile.create({ email, userId });
@@ -43,8 +48,9 @@ router.get("/got_from_google", async (req, res) => {
       .status(200)
       .cookie("jwt", token)
       .cookie("userId", userId)
-      .json({ msg: "Signed up", token, user, profile });
-  }
+      // .json({ msg: "Signed up", token, user, profile });
+      res.redirect("http://localhost:5173/");
+    }
 });
 router.route("/google/failure", (req, res) => {
   res.send("Got errror");
@@ -64,7 +70,10 @@ router.get(
   })
 );
 router.get("/twitter/success",(async (req,res)=>{
-res.json(JSON.parse(req.user._raw))
+// res.json(JSON.parse(req.user._raw))
+res.cookie("msg","working fine")
+res.redirect("http://localhost:5173/");
+
 console.log(req)
 }))
 

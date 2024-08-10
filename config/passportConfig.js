@@ -89,8 +89,8 @@ module.exports = (passport) => {
           "909659334820-j1c5kpnk13f63o629154epuc8lthjsfm.apps.googleusercontent.com",
         clientSecret: "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",
         callbackURL: 
-        // "http://localhost:8080/auth/google/callback",
-        "https://zohayo-launchboard.vercel.app/auth/google/callback",
+        "http://localhost:8080/auth/google/callback",
+        // "https://zohayo-launchboard.vercel.app/auth/google/callback",
 
         passReqToCallback: true,
       },

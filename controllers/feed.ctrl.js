@@ -15,7 +15,7 @@ exports.projectFeed = async (req, res) => {
       const projects = await Projects.find();
       return res.status(200).json(projects);
     }
-    console.log(req.query);
+    console.log( req.query);
   } catch (error) {
     res.status(500).json({ error: "Failed to retrieve projects" });
   }
