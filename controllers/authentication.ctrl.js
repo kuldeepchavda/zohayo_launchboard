@@ -32,12 +32,11 @@ exports.login = (req, res, next) => {
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
         expiresIn: "1h",
       });
+
+      console.log("token", token)
       // const token = getJWT(user._id,user.email)
       return res.status(200).json({ message: "Login successful", token });
     });
   })(req, res, next);
 };
 
-// exports.loginWithGoogle =(req,res)=>{
-//   passport.authenticate('google', { scope: [ 'email', 'profile' ] })
-// }
